@@ -33,6 +33,8 @@ A hallucination-resistant RAG chatbot over internal company PDFs.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Janardan-thapaliya/RAG/blob/main/Advanced%20RAG/Self_RAG.ipynb)
 
+<img width="742" height="857" alt="image" src="https://github.com/user-attachments/assets/5adda9de-9a01-4133-9011-d704c93798cc" />
+
 ---
 
 ### `Corrective_RAG.ipynb`
@@ -59,6 +61,8 @@ A RAG pipeline that self-evaluates retrieval quality and falls back to web searc
 - `LOWER_TH = 0.3` — all docs below this → INCORRECT
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Janardan-thapaliya/RAG/blob/main/Advanced%20RAG/Corrective_RAG.ipynb)
+
+<img width="210" height="736" alt="image" src="https://github.com/user-attachments/assets/90dbfae7-7098-4a81-8d2c-3a9401861c11" />
 
 ---
 
