@@ -1,54 +1,68 @@
-# Advanced RAG Pipelines
+# RAG Pipelines
 
-Hands-on notebooks for building production-quality Retrieval-Augmented Generation systems with LangChain and LangGraph — from basic retrieval to full self-correcting pipelines.
-
-## What's Inside
-
-### Self-RAG
-
-A hallucination-resistant RAG chatbot over internal company PDFs with:
-- **Smart retrieval routing** — decides if retrieval is even needed
-- **Document relevance grading** — filters irrelevant chunks per query
-- **IsSUP verification loop** — checks if answer is grounded in context
-- **Answer revision loop** — rewrites using only direct quotes if unsupported
-- **IsUSE check** — validates the answer actually addresses the user's question
-- **Query rewrite loop** — reformulates query and retries if answer is not useful
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1dXLO7ikZdNL-Bfa3rN5MDCQmvcoK7EJ2)
-
-<img width="792" height="926" alt="Self-RAG pipeline graph" src="https://github.com/user-attachments/assets/cfd3c547-e338-41e3-a918-7ef859f1de6a" />
+Hands-on notebooks for building Retrieval-Augmented Generation systems with LangChain and LangGraph — from raw document ingestion to full self-correcting pipelines.
 
 ---
 
-### Corrective RAG
+## Repository Structure
 
-A RAG pipeline that self-evaluates retrieval quality and falls back to web search when local documents are insufficient:
-- **Retrieval grading** — scores the relevance of each retrieved document
-- **Web search fallback** — queries Tavily when no relevant local docs are found
-- **Answer grounding check** — validates the final answer against retrieved sources
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Z93GT8q6oI7iUw2Z0_yI1nk7Ncy-2aWD)
-
-<img width="218" height="801" alt="Corrective RAG pipeline graph" src="https://github.com/user-attachments/assets/bd2878ec-c663-4896-833b-63f60e41d0a6" />
+```
+RAG/
+├── Document Loader/        # Loading documents from PDFs, CSVs, JSON, web, etc.
+├── Text Splitters/         # Chunking strategies for splitting documents
+├── Embeddings/             # Embedding models (OpenAI, Ollama)
+└── Advanced RAG/           # Self-RAG and Corrective RAG with LangGraph
+```
 
 ---
 
-### Supporting Modules
-- [`Embeddings/`](./Embeddings) — embedding model experiments
-- [`Document Loader/`](./Document%20Loader) — multi-source document ingestion
-- [`Text Splitters/`](./Text%20Splitters) — chunking strategy comparisons
+## Modules
+
+### [`Document Loader/`](./Document%20Loader)
+
+Explores 7 loaders: `TextLoader`, `PyPDFLoader` (plain + OCR via RapidOCR/Tesseract), `PDFMinerLoader`, `PDFPlumberLoader`, `CSVLoader`, `JSONLoader`, and `WebBaseLoader`.
+
+→ [See README](./Document%20Loader/readme.md)
+
+---
+
+### [`Text Splitters/`](./Text%20Splitters)
+
+Covers 8 splitting strategies: character-based, token-based, recursive (plain + language-aware for Python/Markdown/JSON), semantic (embedding-based), and LLM-based chunking.
+
+→ [See README](./Text%20Splitters/readme.md)
+
+---
+
+### [`Embeddings/`](./Embeddings)
+
+OpenAI embeddings (`text-embedding-3-large/small` with matryoshka truncation) and Ollama local embeddings, covering `embed_query` vs `embed_documents`.
+
+→ [See README](./Embeddings/readme.md)
+
+---
+
+### [`Advanced RAG/`](./Advanced%20RAG)
+
+Two production-grade pipelines built with LangGraph:
+
+#### Self-RAG
+Hallucination-resistant chatbot with smart retrieval routing, relevance grading, IsSUP grounding verification, answer revision loop, and IsUSE usefulness check.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Janardan-thapaliya/RAG/blob/main/Advanced%20RAG/Self_RAG.ipynb)
+
+#### Corrective RAG
+Pipeline that scores retrieved docs and falls back to Tavily web search when local documents are insufficient.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Janardan-thapaliya/RAG/blob/main/Advanced%20RAG/Corrective_RAG.ipynb)
+
+→ [See README](./Advanced%20RAG/readme.md)
 
 ---
 
 ## Tech Stack
 
-LangChain · LangGraph · OpenAI (`gpt-4o-mini`, `text-embedding-3-large`) · FAISS · PyPDF · Pydantic · Python
-
-## Key Concepts
-- Structured LLM output with Pydantic schemas
-- LangGraph `StateGraph` with conditional routing
-- Multi-loop self-correction (IsSUP + IsUSE + query rewrite)
-- Hallucination detection and grounding enforcement
+LangChain · LangGraph · OpenAI (`gpt-4o-mini`, `text-embedding-3-large`) · Ollama · FAISS · PyPDF · Pydantic · Tavily · Python
 
 ---
 
@@ -63,7 +77,5 @@ Create a `.env` file and add your API keys:
 
 ```env
 OPENAI_API_KEY=your_openai_key
-TAVILY_API_KEY=your_tavily_key   # required for Corrective RAG
+TAVILY_API_KEY=your_tavily_key   # required for Corrective RAG only
 ```
-
-Provide your PDF documents in the project directory before running the notebooks.
